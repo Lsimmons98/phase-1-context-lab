@@ -1,13 +1,53 @@
-/* Your Code Here */
+const createEmployeeRecord = (employee) => {
+  return {
+    firstName: employee[0],
+    familyName: employee[1],
+    title: employee[2],
+    payPerHour: parseInt(employee[3], 10),
+    timeInEvents: [],
+    timeOutEvents: []
+  }
+}
 
-/*
- We're giving you this function. Take a look at it, you might see some usage
- that's new and different. That's because we're avoiding a well-known, but
- sneaky bug that we'll cover in the next few lessons!
+const createEmployeeRecords = (employees) => {
+  return employees.map(employee => createEmployeeRecord(employee))
+}
 
- As a result, the lessons for this function will pass *and* it will be available
- for you to use if you need it!
- */
+function createTimeInEvent(dateStamp) {
+  const [date, time] = dateStamp.split(' ')
+  const checkIn = {
+    type: 'TimeIn',
+    hour: parseInt(time, 10),
+    date
+  }
+
+  this.timeInEvents.push(checkIn)
+
+  return this
+}
+
+function createTimeOutEvent(dateStamp) {
+  const [date, time] = dateStamp.split(' ')
+  const checkOut = {
+    type: 'TimeOut',
+    hour: parseInt(time, 10),
+    date
+  }
+
+  this.timeOutEvents.push(checkOut)
+
+  return this
+}
+
+function hoursWorkedOnDate(dateStamp){
+ const checkInTime =  this.timeInEvents.find(event => event.date === dateStamp).hour
+ const checkOutTime =  this.timeOutEvents.find(event => event.date === dateStamp).hour
+ return (checkOutTime - checkInTime) / 100
+}
+
+function wagesEarnedOnDate(dateStamp){
+  return hoursWorkedOnDate.call(this, dateStamp) * this.payPerHour
+}
 
 const allWagesFor = function () {
     const eligibleDates = this.timeInEvents.map(function (e) {
@@ -21,3 +61,12 @@ const allWagesFor = function () {
     return payable
 }
 
+function findEmployeeByFirstName(employeeRecords, firstName){
+  return employeeRecords.find(employee => employee.firstName === firstName)
+}
+
+function calculatePayroll(employeeRecords){
+  return employeeRecords.reduce((total, employeeRecord) => {
+     return total + allWagesFor.call(employeeRecord)
+  }, 0)
+}
